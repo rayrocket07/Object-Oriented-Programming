@@ -158,7 +158,8 @@ class PlaintextMessage(Message):
         self.nshift = shift
         self.encrypting_dict = Message.build_shift_dict(self, self.nshift)
         self.message_text_encrypted = Message.apply_shift(self, self.nshift)
-        class CiphertextMessage(Message):
+
+class CiphertextMessage(Message):
     def __init__(self, text):
         '''
         Initializes a CiphertextMessage object
@@ -210,6 +211,9 @@ class PlaintextMessage(Message):
             shift += 1
             first = False
         return bestshift, besttranslate
+
+def decrypt_story():
+    return CiphertextMessage(get_story_string()).decrypt_message()
                
                    
            
