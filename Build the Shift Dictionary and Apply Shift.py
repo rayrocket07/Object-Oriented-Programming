@@ -158,3 +158,58 @@ class PlaintextMessage(Message):
         self.nshift = shift
         self.encrypting_dict = Message.build_shift_dict(self, self.nshift)
         self.message_text_encrypted = Message.apply_shift(self, self.nshift)
+        class CiphertextMessage(Message):
+    def __init__(self, text):
+        '''
+        Initializes a CiphertextMessage object
+                
+        text (string): the message's text
+
+        a CiphertextMessage object has two attributes:
+            self.message_text (string, determined by input text)
+            self.valid_words (list, determined using helper function load_words)
+        '''
+        Message.__init__(self, text)
+
+    def decrypt_message(self):
+        '''
+        Decrypt self.message_text by trying every possible shift value
+        and find the "best" one. We will define "best" as the shift that
+        creates the maximum number of real words when we use apply_shift(shift)
+        on the message text. If s is the original shift value used to encrypt
+        the message, then we would expect 26 - s to be the best shift value 
+        for decrypting it.
+
+        Note: if multiple shifts are  equally good such that they all create 
+        the maximum number of you may choose any of those shifts (and their
+        corresponding decrypted messages) to return
+
+        Returns: a tuple of the best shift value used to decrypt the message
+        and the decrypted message text using that shift value
+        '''
+        bestshift = 0
+        besttranslate = None
+        translatescore = 0
+        shift = 0
+        first = True
+        while shift < 26 :
+            currenttranslate = ""
+            currenttranslatescore = 0
+            shifter = Message.build_shift_dict(self, shift)
+            newscript = Message.apply_shift(self, shift)
+            lscript = newscript.split(" ")
+            for i in lscript:
+                if i in self.valid_words:
+                    currenttranslatescore += 1
+                word = i + " "
+                currenttranslate += word
+            if first or translatescore < currenttranslatescore:
+                translatescore = currenttranslatescore
+                besttranslate =  currenttranslate[:-1]
+                bestshift = shift
+            shift += 1
+            first = False
+        return bestshift, besttranslate
+               
+                   
+           
