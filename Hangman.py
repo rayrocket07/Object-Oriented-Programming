@@ -30,4 +30,15 @@ def getGuessedWord(secretWord, lettersGuessed):
         strspace += i
     return strspace
              
+def getAvailableLetters(lettersGuessed):
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    lst = []
+    for i in letters:
+        lst.append(i)
+    for i in lettersGuessed:
+        lst.remove(i)
+    lettersleft = ""
+    for i in lst:
+        lettersleft += i
+    return(lettersleft)
 
