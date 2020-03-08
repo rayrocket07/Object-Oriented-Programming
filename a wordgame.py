@@ -51,6 +51,29 @@ def updateHand(hand, word):
         hi[i] -= 1
     return(hi)
     
+def isValidWord(word, hand, wordList):
+    """
+    Returns True if word is in the wordList and is entirely
+    composed of letters in the hand. Otherwise, returns False.
+
+    Does not mutate hand or wordList.
+   
+    word: string
+    hand: dictionary (string -> int)
+    wordList: list of lowercase strings
+    """
+    handword = ""
+    for key,value in hand.items():
+        handword += key*int(value)
+    lst = []
+    for i in handword:
+        lst.append(i)
+    for i in word:
+        if i in lst:
+            lst.remove(i)
+        else:
+            return False
+    return(word in wordList)
 
                
                    
