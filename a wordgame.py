@@ -74,6 +74,17 @@ def isValidWord(word, hand, wordList):
         else:
             return False
     return(word in wordList)
+def calculateHandlen(hand):
+    """ 
+    Returns the length (number of letters) in the current hand.
+    
+    hand: dictionary (string int)
+    returns: integer
+    """
+    total = 0
+    for i in hand.values():
+        total += i
+    return total
 
                
                    
